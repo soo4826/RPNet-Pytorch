@@ -1,4 +1,4 @@
 from .camvid import CamVid
 from .cityscapes import Cityscapes
-
-__all__ = ['CamVid', 'Cityscapes']
+from .woodscape import Woodscapes
+__all__ = ['CamVid', 'Cityscapes', 'Woodscape']
