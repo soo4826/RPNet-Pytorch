@@ -1,0 +1,26 @@
+ARGUMENTS
+batch_size: 3
+cuda: store_false
+dataset: woodscape
+dataset_dir: data/Woodscape
+epochs: 300
+height: 512
+ignore_unlabeled: True
+imshow_batch: False
+learning_rate: 0.0005
+lr_decay: 0.1
+lr_decay_epochs: 100
+mode: train
+name: RPNet
+print_step: False
+resume: False
+save_dir: save
+step: 4
+weighing: mfb
+weight_decay: 0.0001
+width: 1024
+workers: 4
+
+BEST VALIDATION
+Epoch: 1
+Mean IoU: 0.28230213184241104

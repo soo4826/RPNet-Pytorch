@@ -18,6 +18,7 @@ from args import get_arguments
 from data.utils import enet_weighing, median_freq_balancing
 import utils
 from PIL import Image
+from tqdm import trange
 
 import numpy as np
 # Get the arguments
@@ -181,8 +182,8 @@ def train(train_loader, val_loader, class_weights, class_encoding):
     # Start Training
     train = Train(model, train_loader, optimizer, criterion, metric, use_cuda, step)
     val = Test(model, val_loader, criterion, metric, use_cuda, step)
-    for epoch in range(start_epoch, args.epochs):
-        print(">>>> [Epoch: {0:d}] Training".format(epoch))
+    for epoch in trange(start_epoch, args.epochs):
+        # print(">>>> [Epoch: {0:d}] Training".format(epoch))
         train.model.train()
         lr_updater.step()
         epoch_loss, (iou, miou) = train.run_epoch(args.print_step)
