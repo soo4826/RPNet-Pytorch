@@ -13,14 +13,14 @@ lr_decay_epochs: 100
 mode: train
 name: RPNet
 print_step: False
-resume: False
+resume: True
 save_dir: save
-step: 4
+step: 1
 weighing: mfb
 weight_decay: 0.0001
 width: 1024
 workers: 4
 
 BEST VALIDATION
-Epoch: 1
-Mean IoU: 0.28230213184241104
+Epoch: 301
+Mean IoU: 0.46237390792480987
