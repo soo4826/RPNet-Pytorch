@@ -117,7 +117,7 @@ def load_checkpoint(model, optimizer, folder_dir, filename):
         model_path), "The model file \"{0}\" doesn't exist.".format(filename)
 
     # Load the stored model parameters to the model instance
-    checkpoint = torch.load(model_path)
+    checkpoint = torch.load(model_path, map_location='cuda:0')
     model.load_state_dict(checkpoint['state_dict'])
     optimizer.load_state_dict(checkpoint['optimizer'])
     epoch = 0

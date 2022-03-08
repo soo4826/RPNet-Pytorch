@@ -1,7 +1,7 @@
 import os
 
 import torch
-torch.cuda.set_device(1)
+# torch.cuda.set_device(0)
 import torch.nn as nn
 import torch.optim as optim
 import torch.optim.lr_scheduler as lr_scheduler
@@ -115,7 +115,8 @@ def load_dataset(dataset):
 
     # Get class weights from the selected weighing technique
     print("\nWeighing technique:", args.weighing)
-    class_weights = np.array([0.0,2.7,6.1,3.6,7.7,7.7,8.1,8.6,8.4,4.3,7.7,6.8,8.0,8.6,5.9,7.7,7.5,6.6,8.5,8.4])
+    # class_weights = np.array([0.0,2.7,6.1,3.6,7.7,7.7,8.1,8.6,8.4,4.3,7.7,6.8,8.0,8.6,5.9,7.7,7.5,6.6,8.5,8.4])
+    class_weights = None
     if class_weights is not None:
         class_weights = torch.from_numpy(class_weights).float()
         # Set the weight of the unlabeled class to 0
@@ -291,6 +292,8 @@ if __name__ == '__main__':
         from data import CamVid as dataset
     elif args.dataset.lower() == 'cityscapes':
         from data import Cityscapes as dataset
+    elif args.dataset.lower() == 'woodscape':
+        from data import Woodscapes as dataset
     else:
         # Should never happen...but just in case it does
         raise RuntimeError("\"{0}\" is not a supported dataset.".format(

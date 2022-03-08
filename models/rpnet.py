@@ -97,6 +97,7 @@ class RPNet(nn.Module):
         self.l3d3=non_bottleneck_1d(128, 0.3, 8)
         self.l3d4=non_bottleneck_1d(128, 0.3, 16)
         #Only in encoder mode:
+        # print(num_classes)
         self.conv2d1 = nn.Conv2d(
                     128,
                     num_classes,
@@ -112,7 +113,8 @@ class RPNet(nn.Module):
                     padding=0,
                     bias=True)
         self.conv2d3 = nn.Conv2d(
-                    36,
+                    # 36,
+                    26, # For Woodscape
                     num_classes,
                     kernel_size=1,
                     stride=1,
@@ -180,7 +182,9 @@ class RPNet(nn.Module):
         x1_4=x1_41+cc_4
 
         x1_4_2 = torch.nn.functional.interpolate(x1_4, scale_factor=2, mode='bilinear')
+        # print(x1_4_2.shape, d_1.shape)
         out2 = torch.cat((x1_4_2, d_1), 1)
+        # print(out2.shape)
         x1_21 = self.conv2d3(out2)
         x1_2=x1_21+cc_2
 
