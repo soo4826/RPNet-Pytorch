@@ -37,12 +37,13 @@ def decode_segmap(label_mask, num_classes):
 height, width = 512, 1024
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
-checkpoint = torch.load("save/RPNet", map_location='cuda:0')
+checkpoint = torch.load("save/RPNet")
 # print(checkpoint)
 num_classes = 10
 model = RPNet(num_classes=num_classes)
 
 model.eval()
+
 model.to(device)
 # def transform(image):
 #     return tr.Compose([
@@ -56,17 +57,23 @@ model.to(device)
 torch.set_grad_enabled(False)
 
 img_path = "data/Woodscape/rgb_images/00003_FV.png"
-gt_path = ""
+# gt_path = ""
 image = Image.open(img_path)
+def transform(image):
+    return transforms.Compose([
+        transforms.Resize((height,width), Image.BILINEAR), 
+        transforms.ToTensor()
+    ])(image)
 
-image_transform = transforms.Compose(
-    [transforms.Resize((height, width),Image.BILINEAR),
-        transforms.ToTensor()])
-inputs = image_transform(image).to(device)
+# image_transform = transforms.Compose(
+#     [transforms.Resize((height, width),Image.BILINEAR),
+#         transforms.ToTensor()])(image)
+inputs = transform(image).to(device)
 
 predictions = model(inputs.unsqueeze(0))
+# print(type(predictions[0]))
 predictions = np.argmax(predictions[0].data.cpu().detach().numpy(), 1)
-print(predictions.squeeze().shape)
+# print(predictions.squeeze().shape)
 
 
 
