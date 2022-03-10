@@ -127,7 +127,7 @@ def load_checkpoint(model, optimizer, folder_dir, filename):
 
 
 
-def DataLoader(inputs, labels):
+def dataaug(inputs, labels):
     """use flip and warpAffine
     """
     for i in range(inputs.shape[0]):
