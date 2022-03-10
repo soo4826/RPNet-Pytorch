@@ -68,7 +68,7 @@ def save_checkpoint(model, optimizer, epoch, miou, args):
         save_dir), "The directory \"{0}\" doesn't exist.".format(save_dir)
 
     # Save model
-    model_path = os.path.join(save_dir, name)
+    model_path = os.path.join(save_dir, name + str(epoch)+'_'+str(args.step))
     checkpoint = {
         'epoch': epoch,
         'miou': miou,
