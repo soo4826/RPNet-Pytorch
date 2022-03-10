@@ -73,6 +73,13 @@ class Woodscapes(data.Dataset):
         self.label_transform = label_transform
         self.loader = loader
 
+
+        # self.valid_class = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        # self.NUM_CLASSES = 10
+        # self.class_map = dict(zip(self.valid_classes, range(self.NUM_CLASSES)))
+        # self.ignore_index = 0
+
+
         if self.mode.lower() == 'train':
             # Get the training data and labels filepaths
             split_path = os.path.join(root_dir, self.train_split)
@@ -144,7 +151,7 @@ class Woodscapes(data.Dataset):
         img, label = self.loader(data_path, label_path)
 
         # Greyscale
-        label = label.convert('L')
+        # label = label.convert('L')
         # label.convert('L').show()
         # exit()
         # Remap class labels
@@ -171,3 +178,12 @@ class Woodscapes(data.Dataset):
         else:
             raise RuntimeError("Unexpected dataset mode. "
                                "Supported modes are: train, val and test")
+    
+    # def encode_segmap(self, mask):
+    #     # Put all void classes to zero
+    #     for _voidc in self.void_classes:
+    #         mask[mask == _voidc] = self.ignore_index
+            
+    #     for _validc in self.valid_classes:
+    #         mask[mask == _validc] = self.class_map[_validc]
+    #     return mask
