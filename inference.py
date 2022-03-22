@@ -37,10 +37,12 @@ def decode_segmap(label_mask, num_classes):
 height, width = 512, 1024
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
-checkpoint = torch.load("save/RPNet")
+checkpoint = torch.load("save/RPNet", map_location=torch.device("cuda:0"))
+# checkpoint = torch.load("/home/ailab/Project/05_Woodscape/RPNet-RTMaps/save/RPNet",map_location=torch.device("cuda:0"))
 # print(checkpoint)
 num_classes = 10
 model = RPNet(num_classes=num_classes)
+model.load_state_dict(checkpoint['state_dict'])
 
 model.eval()
 
