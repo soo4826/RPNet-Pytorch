@@ -37,7 +37,8 @@ def decode_segmap(label_mask, num_classes):
 height, width = 512, 1024
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
-checkpoint = torch.load("save/RPNet", map_location=torch.device("cuda:0"))
+# checkpoint = torch.load("save/RPNet", map_location=torch.device("cuda:0"))
+checkpoint = torch.load("save/RPNet_V2", map_location=torch.device("cuda:0"))
 # checkpoint = torch.load("/home/ailab/Project/05_Woodscape/RPNet-RTMaps/save/RPNet",map_location=torch.device("cuda:0"))
 # print(checkpoint)
 num_classes = 10
@@ -58,7 +59,7 @@ model.to(device)
 
 torch.set_grad_enabled(False)
 
-img_path = "data/Woodscape/rgb_images/00003_FV.png"
+img_path = "data/Woodscape/rgb_images/00178_FV.png"
 # gt_path = ""
 image = Image.open(img_path)
 def transform(image):
