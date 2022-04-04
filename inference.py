@@ -8,18 +8,31 @@ import torchvision.transforms as transforms
 
 from models.rpnet import RPNet
 
+## Label map (Modified)
+# 0: Unlabeled (000)
+# 1: road (101)
+# 2: lanemarks (011)
+# 3: curb (010)
+# 4: person (100)
+# 5: rider (111)
+# 7: bicycle (011)
+# 6: vehicles (110)
+# 8: motorcycle (10.50.5)
+# 9: traffic_sign(0.50.50)
 
 def decode_segmap(label_mask, num_classes):
-    label_colors= np.array([[0  ,0,  0  ],
-                           [255,0,255  ],
-                           [255,0,  0  ],
-                           [0,  255,0  ],
-                           [0,  0  ,255],
-                           [255,255,255],
-                           [255,255,0  ],
-                           [0  ,255,255],
-                           [128,128,255],
-                           [0  ,128,128]])
+    label_colors= np.array([
+                           [0  ,0  ,0  ],# Unlabeled
+                           [255,0,255  ],# Road
+                           [0  ,0  ,255],# Lanemarks
+                           [0,  255,0  ],# Curb
+                           [255,0  ,0  ],# Person
+                           [255,255,255],# Rider
+                           [0  ,255,255],# Bicycle
+                           [255,255,0  ],# Vehicles
+                           [255,128,128],# Motorcycle
+                           [128,128,0  ] # Traffic sign
+                           ])
     r = label_mask.copy()
     g = label_mask.copy()
     b = label_mask.copy()
@@ -33,44 +46,45 @@ def decode_segmap(label_mask, num_classes):
     rgb[:, :, 2] = b/255.
     return rgb
 
-# from dataloaders.utils import decode_segmap
-height, width = 512, 1024
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-
-# checkpoint = torch.load("save/RPNet", map_location=torch.device("cuda:0"))
-checkpoint = torch.load("save/RPNet_V2", map_location=torch.device("cuda:0"))
-# checkpoint = torch.load("/home/ailab/Project/05_Woodscape/RPNet-RTMaps/save/RPNet",map_location=torch.device("cuda:0"))
-# print(checkpoint)
-num_classes = 10
-model = RPNet(num_classes=num_classes)
-model.load_state_dict(checkpoint['state_dict'])
-
-model.eval()
-
-model.to(device)
-# def transform(image):
-#     return tr.Compose([
-#         # tr.Resize(513),
-#         # tr.CenterCrop(513),
-#         tr.Resize((height, width),Image.BILINEAR),
-#         tr.ToTensor(),
-#         # tr.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))
-#     ])(image)
-
-torch.set_grad_enabled(False)
-
-img_path = "data/Woodscape/rgb_images/00178_FV.png"
-# gt_path = ""
-image = Image.open(img_path)
 def transform(image):
     return transforms.Compose([
         transforms.Resize((height,width), Image.BILINEAR), 
         transforms.ToTensor()
     ])(image)
 
-# image_transform = transforms.Compose(
-#     [transforms.Resize((height, width),Image.BILINEAR),
-#         transforms.ToTensor()])(image)
+def transform_gt(image):
+    return transforms.Compose([
+        transforms.Resize((height,width), Image.BILINEAR),
+    ])(image)
+
+
+height, width = 512, 1024
+device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+
+# checkpoint = torch.load("save/RPNet", map_location=torch.device("cuda:0"))
+checkpoint = torch.load("save/RPNet_V3", map_location=torch.device("cuda:0"))
+# checkpoint = torch.load("/home/ailab/Project/05_Woodscape/RPNet-RTMaps/save/RPNet",map_location=torch.device("cuda:0"))
+
+num_classes = 10
+
+model = RPNet(num_classes=num_classes)
+model.load_state_dict(checkpoint['state_dict'])
+model.eval()
+model.to(device)
+
+torch.set_grad_enabled(False)
+
+img_path = "data/Woodscape/rgb_images/00178_FV.png"
+gt_path = "data/Woodscape/semantic_annotations/gtLabels/00202_MVL.png"
+gt = np.array(Image.open(gt_path))
+gt = decode_segmap(gt, num_classes)
+gt = Image.fromarray((gt * 255).astype(np.uint8))
+gt = transform_gt(gt)
+gt = np.array(gt)
+
+image = Image.open(img_path)
+
+
 inputs = transform(image).to(device)
 
 predictions = model(inputs.unsqueeze(0))
@@ -79,9 +93,10 @@ predictions = np.argmax(predictions[0].data.cpu().detach().numpy(), 1)
 # print(predictions.squeeze().shape)
 
 
-
-
 predictions = decode_segmap(predictions.squeeze(), num_classes)
-# print(predictions)
+
+plt.subplot(1, 2, 1)
 plt.imshow(predictions)
+plt.subplot(1, 2, 2)
+plt.imshow(gt)
 plt.show()

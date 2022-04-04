@@ -1,7 +1,7 @@
 import os
 
 import torch
-torch.cuda.set_device(3)
+torch.cuda.set_device(0)
 import torch.nn as nn
 import torch.optim as optim
 import torch.optim.lr_scheduler as lr_scheduler

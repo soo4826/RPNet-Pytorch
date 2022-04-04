@@ -5,3 +5,7 @@
 *.zip
 
 save/
+
+__pycache__/*.pyc
+
+*.pyc 

@@ -42,23 +42,35 @@ class Woodscapes(data.Dataset):
     # img_extension = '.png'
     # lbl_name_filter = 'labelIds'
 
-    # The values associated with the 35 classes
+    # The values associated with the 9 classes
     full_classes = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
     # The values above are remapped to the following
     new_classes = full_classes
 
     # Default encoding for pixel value, class name, and class color
     color_encoding = OrderedDict([
-            ('unlabeled', (0, 0, 0)),
-            ('road', (255, 0, 255)), # 6
-            ('lanemarks', (255, 0, 0)),
-            ('curb', (0, 255, 0)),
-            ('person', (0, 0, 255)),
-            ('rider', (255, 255, 255)),
-            ('vehicles', (255, 255, 0)), # 0F
-            ('bicycle', (0, 255, 255)),
-            ('motorcycle', (128, 128, 255)),
-            ('traffic_sign', (0, 128, 128))
+
+            ("unlabeled"    , (0  ,0  ,0  )), 
+            ("road"         , (255,0,255  )), 
+            ("lanemarks"    , (0  ,0  ,255)), 
+            ("curb"         , (0,  255,0  )), 
+            ("person"       , (255,0  ,0  )), 
+            ("rider"        , (255,255,255)), 
+            ("bicycle"      , (0  ,255,255)), 
+            ("vehicles"     , (255,255,0  )), 
+            ("motorcycle"   , (255,128,128)), 
+            ("traffic_sign" , (128,128,0  ))  
+
+            # ('unlabeled', (0, 0, 0)),
+            # ('road', (255, 0, 255)), # 6
+            # ('lanemarks', (255, 0, 0)),
+            # ('curb', (0, 255, 0)),
+            # ('person', (0, 0, 255)),
+            # ('rider', (255, 255, 255)),
+            # ('vehicles', (255, 255, 0)), # 0F
+            # ('bicycle', (0, 255, 255)),
+            # ('motorcycle', (128, 128, 255)),
+            # ('traffic_sign', (0, 128, 128))
     ])
 
     def __init__(self,
@@ -149,12 +161,6 @@ class Woodscapes(data.Dataset):
                                "Supported modes are: train, val and test")
 
         img, label = self.loader(data_path, label_path)
-
-        # Greyscale
-        # label = label.convert('L')
-        # label.convert('L').show()
-        # exit()
-        # Remap class labels
 
         label = utils.remap(label, self.full_classes, self.new_classes)
 
