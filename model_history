@@ -1,3 +1,7 @@
 Format: YYYY.MM.DD | Name | Key features
 
-20220404 | RPNet V5 | 이미지 height, width 변화해서 재학습
+20220404 | RPNet V4 | 이미지 height, width 변화해서 재학습
+20220404 | RPNet V5 | V4에서 lr줄이고, epoch 늘려서 재학습
+20220405 | RPNet V6 | lr 5e-4, batch 1
+20220405 | RPNet V7 | using enet weighting
+20220405 | RPNet V8 | using median freq balancing
