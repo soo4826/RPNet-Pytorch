@@ -46,19 +46,15 @@ def decode_segmap(label_mask, num_classes):
     rgb[:, :, 2] = b/255.
     return rgb
 
-# def transform(image):
-#     return transforms.Compose([
-#         transforms.Resize((height,width), Image.BILINEAR), 
-#         transforms.ToTensor()
-#     ])(image)
+
 def transform(image):
     return transforms.Compose([
-        # transforms.Resize(513),
-        # transforms.CenterCrop(513),
-        transforms.Resize((height,width), Image.BILINEAR), 
-        transforms.ToTensor(),
-        transforms.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))
+         transforms.Resize((height, width),Image.BILINEAR),
+         transforms.ToTensor(),
+         transforms.Normalize(mean=(0.3257, 0.3690, 0.3223),
+            std=(0.2112, 0.2148, 0.2115))
     ])(image)
+
 
 def transform_gt(image):
     return transforms.Compose([
@@ -66,12 +62,11 @@ def transform_gt(image):
     ])(image)
 
 
-height, width = 512, 1024
+height, width = 968, 1280
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 # checkpoint = torch.load("save/RPNet", map_location=torch.device("cuda:0"))
 checkpoint = torch.load("save/RPNet_V2", map_location=torch.device("cuda:0"))
-# checkpoint = torch.load("/home/ailab/Project/05_Woodscape/RPNet-RTMaps/save/RPNet",map_location=torch.device("cuda:0"))
 
 num_classes = 10
 
@@ -102,12 +97,13 @@ predictions = np.argmax(predictions[0].data.cpu().detach().numpy(), 1)
 
 predictions = decode_segmap(predictions.squeeze(), num_classes)
 
-plt.subplot(4, 1, 1)
+# print(type())
+plt.subplot(2, 2, 1)
 plt.imshow(img_raw)
-plt.subplot(4, 1, 2)
-plt.imshow(transforms.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))(transforms.ToTensor(img_raw)))
-plt.subplot(4, 1, 3)
+plt.subplot(2, 2, 2)
+plt.imshow(transform(img_raw).permute(1,2,0))
+plt.subplot(2, 2, 3)
 plt.imshow(predictions)
-plt.subplot(4, 1, 4)
+plt.subplot(2, 2, 4)
 plt.imshow(gt)
 plt.show()
