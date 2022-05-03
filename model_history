@@ -5,3 +5,9 @@ Format: YYYY.MM.DD | Name | Key features
 20220405 | RPNet V6 | lr 5e-4, batch 1, using --with unlabeled
 20220405 | RPNet V7 | using enet weighting (arg modified!!)
 20220405 | RPNet V8 | using median freq balancing (mfb)
+
+20220503 | RPNet V9 | Add Image Normalization, no weighting
+20220503 | RPNet V10 | Add Image Normalization, mfb
+20220503 | RPNet V11 | Add Image Normalization, enet
+
+? | RPNet V12 | V9 + Add Image Augmentation(RandomSizeCrop, RandomHorizontalFlip, ...)

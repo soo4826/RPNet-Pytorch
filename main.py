@@ -36,7 +36,10 @@ def load_dataset(dataset):
 
     image_transform = transforms.Compose(
         [transforms.Resize((args.height, args.width),Image.BILINEAR),
-         transforms.ToTensor()])
+         transforms.ToTensor(),
+         transforms.Normalize(mean=(0.3257, 0.3690, 0.3223),
+            std=(0.2112, 0.2148, 0.2115))
+        ])
 
     label_transform = transforms.Compose([
         transforms.Resize((args.height, args.width),Image.NEAREST),
@@ -139,7 +142,7 @@ def load_dataset(dataset):
 
 
 def train(train_loader, val_loader, class_weights, class_encoding):
-    print("\nTraining...\n")
+    print("\n"+ args.name + " Training...\n")
 
     num_classes = len(class_encoding)
 

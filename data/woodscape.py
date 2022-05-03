@@ -184,12 +184,31 @@ class Woodscapes(data.Dataset):
         else:
             raise RuntimeError("Unexpected dataset mode. "
                                "Supported modes are: train, val and test")
-    
-    # def encode_segmap(self, mask):
-    #     # Put all void classes to zero
-    #     for _voidc in self.void_classes:
-    #         mask[mask == _voidc] = self.ignore_index
-            
-    #     for _validc in self.valid_classes:
-    #         mask[mask == _validc] = self.class_map[_validc]
-    #     return mask
+                               
+    def transform_tr(self, sample):
+        composed_transforms = transforms.Compose([
+            # tr.RandomHorizontalFlip(),
+            # tr.RandomScaleCrop(base_size=self.args.base_size, crop_size=self.args.crop_size, fill=255),
+            # tr.RandomGaussianBlur(),
+            tr.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
+            tr.ToTensor()])
+
+        return composed_transforms(sample)
+
+    def transform_val(self, sample):
+
+        composed_transforms = transforms.Compose([
+            # tr.FixScaleCrop(crop_size=self.args.crop_size),
+            tr.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
+            tr.ToTensor()])
+
+        return composed_transforms(sample)
+
+    def transform_ts(self, sample):
+
+        composed_transforms = transforms.Compose([
+            # tr.FixedResize(size=self.args.crop_size),
+            tr.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
+            tr.ToTensor()])
+
+        return composed_transforms(sample)
