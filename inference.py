@@ -66,7 +66,7 @@ height, width = 968, 1280
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 # checkpoint = torch.load("save/RPNet", map_location=torch.device("cuda:0"))
-checkpoint = torch.load("save/RPNet_V2", map_location=torch.device("cuda:0"))
+checkpoint = torch.load("save/RPNet_V9", map_location=torch.device("cuda:0"))
 
 num_classes = 10
 
@@ -76,34 +76,55 @@ model.eval()
 model.to(device)
 
 torch.set_grad_enabled(False)
+woodscape = False
+valeo = True
 
-img_name = "02958_MVR"
-img_path = "data/Woodscape/rgb_images/" + img_name + ".png"
-gt_path = "data/Woodscape/semantic_annotations/gtLabels/" + img_name + ".png"
-gt = np.array(Image.open(gt_path))
-gt = decode_segmap(gt, num_classes)
-gt = Image.fromarray((gt * 255).astype(np.uint8))
-gt = transform_gt(gt)
-gt = np.array(gt)
+if woodscape:
+    img_name = "02958_MVR"
+    img_path = "data/Woodscape/rgb_images/" + img_name + ".png"
+    gt_path = "data/Woodscape/semantic_annotations/gtLabels/" + img_name + ".png"
+    gt = np.array(Image.open(gt_path))
+    gt = decode_segmap(gt, num_classes)
+    gt = Image.fromarray((gt * 255).astype(np.uint8))
+    gt = transform_gt(gt)
+    gt = np.array(gt)
 
-image = Image.open(img_path)
-img_raw = image
-inputs = transform(image).to(device)
-predictions = model(inputs.unsqueeze(0))
-# print(type(predictions[0]))
-predictions = np.argmax(predictions[0].data.cpu().detach().numpy(), 1)
-# print(predictions.squeeze().shape)
+    image = Image.open(img_path)
+    img_raw = image
+    inputs = transform(image).to(device)
+    predictions = model(inputs.unsqueeze(0))
+    # print(type(predictions[0]))
+    predictions = np.argmax(predictions[0].data.cpu().detach().numpy(), 1)
+    # print(predictions.squeeze().shape)
 
 
-predictions = decode_segmap(predictions.squeeze(), num_classes)
+    predictions = decode_segmap(predictions.squeeze(), num_classes)
 
-# print(type())
-plt.subplot(2, 2, 1)
-plt.imshow(img_raw)
-plt.subplot(2, 2, 2)
-plt.imshow(transform(img_raw).permute(1,2,0))
-plt.subplot(2, 2, 3)
-plt.imshow(predictions)
-plt.subplot(2, 2, 4)
-plt.imshow(gt)
-plt.show()
+    # print(type())
+    plt.subplot(2, 2, 1)
+    plt.imshow(img_raw)
+    plt.subplot(2, 2, 2)
+    plt.imshow(transform(img_raw).permute(1,2,0))
+    plt.subplot(2, 2, 3)
+    plt.imshow(predictions)
+    plt.subplot(2, 2, 4)
+    plt.imshow(gt)
+    plt.show()
+
+elif valeo:
+    img_base = '/home/ailab/Project/05_Woodscape/Valeo_Driving_Scene/'
+    init_num = "03258"
+    for i in range (1, 100):
+
+        img_path = img_base + str(int(init_num)+i).zfill(5) + ".jpg"
+        image = Image.open(img_path)
+        inputs = transform(image).to(device)
+        predictions = model(inputs.unsqueeze(0))
+        predictions = np.argmax(predictions[0].data.cpu().detach().numpy(), 1)
+        predictions = decode_segmap(predictions.squeeze(), num_classes)
+
+        plt.subplot(1, 2, 1)
+        plt.imshow(transform(image).permute(1,2,0))
+        plt.subplot(1, 2, 2)
+        plt.imshow(predictions)
+        plt.show()
