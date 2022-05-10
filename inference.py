@@ -1,3 +1,4 @@
+from numpy import size
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
@@ -113,7 +114,7 @@ if woodscape:
 
 elif valeo:
     img_base = '/home/ailab/Project/05_Woodscape/Valeo_Driving_Scene/'
-    init_num = "03258"
+    init_num = "07293"
     for i in range (1, 100):
 
         img_path = img_base + str(int(init_num)+i).zfill(5) + ".jpg"
@@ -123,8 +124,11 @@ elif valeo:
         predictions = np.argmax(predictions[0].data.cpu().detach().numpy(), 1)
         predictions = decode_segmap(predictions.squeeze(), num_classes)
 
-        plt.subplot(1, 2, 1)
+        plt.figure(figsize=(40, 30))
+        plt.subplot(1, 3, 1)
+        plt.imshow(image)
+        plt.subplot(1, 3, 2)
         plt.imshow(transform(image).permute(1,2,0))
-        plt.subplot(1, 2, 2)
+        plt.subplot(1, 3, 3)
         plt.imshow(predictions)
         plt.show()
