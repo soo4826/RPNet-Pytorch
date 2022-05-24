@@ -5,8 +5,10 @@ import numpy as np
 from PIL import Image
 import transforms as ext_transforms
 import torchvision.transforms as transforms
-
 from models.rpnet import RPNet
+
+import os
+from argparse import ArgumentParser
 
 ## Label map (Modified)
 # 0: Unlabeled (000)
@@ -62,73 +64,120 @@ def transform_gt(image):
         transforms.Resize((height,width), Image.BILINEAR),
     ])(image)
 
+if __name__=="__main__":
+    # Argparser for inference options
+    parser = ArgumentParser()
+    
+    parser.add_argument(
+    "--height",
+    type=int,
+    default=968,
+    help="Hight of input image (default: 968)")
+    parser.add_argument(
+    "--width",
+    type=int,
+    default=1280,
+    help="width of input image (default: 1280)")
+    parser.add_argument(
+    "--model",
+    type=str,
+    default="save/RPNet",
+    help="Path to model parameter (default: save/RPNet")
+    parser.add_argument(
+    "--dataset",
+    type=str,
+    default="woodscape",
+    choices=['valeo', 'woodscape'],
+    help="Dataset to use (default: woodscape")
+    parser.add_argument(
+    "--dataset-path",
+    type=str,
+    default="data/Woodscape",
+    help="Dataset path to use (Default: data/Woodscape")
+    parser.add_argument(
+    "--image-name",
+    type=str,
+    default="02958_MVR",
+    help="image file name in dataset (default: 02958_MVR)")
+    
+    
+    args = parser.parse_args()
 
-height, width = 968, 1280
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+    # Configure input image size
+    height, width = args.height, args.width
+    
+    # Enables GPU if possible
+    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
-# checkpoint = torch.load("save/RPNet", map_location=torch.device("cuda:0"))
-checkpoint = torch.load("save/RPNet_V9", map_location=torch.device("cuda:0"))
+    # Load trained model parameter
+    checkpoint = torch.load(args.model, map_location=torch.device("cuda:0"))
 
-num_classes = 10
+    # Load model architecture and model weight
+    num_classes = 10
+    model = RPNet(num_classes=num_classes)
+    model.load_state_dict(checkpoint['state_dict'])
+    
+    # Evaluation mode 
+    model.eval() 
+    model.to(device)
+    torch.set_grad_enabled(False)
+    
+    if args.dataset == "woodscape":
+        # Set inference image path
+        img_name = args.image_name + ".png"
+        img_path = os.path.join(args.dataset_path, "rgb_images", img_name)
+        gt_path = os.path.join(args.dataset_path, "semantic_annotations", "gtLabels", img_name)
+        gt = np.array(Image.open(gt_path))
+        gt = decode_segmap(gt, num_classes)
+        gt = Image.fromarray((gt * 255).astype(np.uint8))
+        gt = transform_gt(gt)
+        gt = np.array(gt)
 
-model = RPNet(num_classes=num_classes)
-model.load_state_dict(checkpoint['state_dict'])
-model.eval()
-model.to(device)
-
-torch.set_grad_enabled(False)
-woodscape = False
-valeo = True
-
-if woodscape:
-    img_name = "02958_MVR"
-    img_path = "data/Woodscape/rgb_images/" + img_name + ".png"
-    gt_path = "data/Woodscape/semantic_annotations/gtLabels/" + img_name + ".png"
-    gt = np.array(Image.open(gt_path))
-    gt = decode_segmap(gt, num_classes)
-    gt = Image.fromarray((gt * 255).astype(np.uint8))
-    gt = transform_gt(gt)
-    gt = np.array(gt)
-
-    image = Image.open(img_path)
-    img_raw = image
-    inputs = transform(image).to(device)
-    predictions = model(inputs.unsqueeze(0))
-    # print(type(predictions[0]))
-    predictions = np.argmax(predictions[0].data.cpu().detach().numpy(), 1)
-    # print(predictions.squeeze().shape)
-
-
-    predictions = decode_segmap(predictions.squeeze(), num_classes)
-
-    # print(type())
-    plt.subplot(2, 2, 1)
-    plt.imshow(img_raw)
-    plt.subplot(2, 2, 2)
-    plt.imshow(transform(img_raw).permute(1,2,0))
-    plt.subplot(2, 2, 3)
-    plt.imshow(predictions)
-    plt.subplot(2, 2, 4)
-    plt.imshow(gt)
-    plt.show()
-
-elif valeo:
-    img_base = '/home/ailab/Project/05_Woodscape/Valeo_Driving_Scene/'
-    init_num = "07293"
-    for i in range (1, 100):
-
-        img_path = img_base + str(int(init_num)+i).zfill(5) + ".jpg"
+        # Load image file
         image = Image.open(img_path)
+        img_raw = image
         inputs = transform(image).to(device)
+        
+        # Inference
         predictions = model(inputs.unsqueeze(0))
         predictions = np.argmax(predictions[0].data.cpu().detach().numpy(), 1)
         predictions = decode_segmap(predictions.squeeze(), num_classes)
 
-        plt.figure(figsize=(40, 30))
+        ## Normalized image
+        # plt.imshow(transform(img_raw).permute(1,2,0))
+        
+        # Show image (input_img, pred_image, pred_image)
+        plt.figure(figsize=(15, 5))
         plt.subplot(1, 3, 1)
-        plt.imshow(image)
+        plt.imshow(img_raw)
         plt.subplot(1, 3, 2)
-        plt.imshow(transform(image).permute(1,2,0))
-        plt.subplot(1, 3, 3)
         plt.imshow(predictions)
+        plt.subplot(1, 3, 3)
+        plt.imshow(gt)
         plt.show()
+
+    elif args.dataset == "valeo":
+        img_base = args.dataset_path
+        
+        # Infer 100 images in dataset folder (Convert .rec file into .jpg file)
+        for i in range (1, 100):
+            
+            # Set inference image path
+            img_path = img_base + str(i).zfill(5) + ".jpg"
+
+            # Load image
+            image = Image.open(img_path)
+            inputs = transform(image).to(device)
+            predictions = model(inputs.unsqueeze(0))
+            predictions = np.argmax(predictions[0].data.cpu().detach().numpy(), 1)
+            predictions = decode_segmap(predictions.squeeze(), num_classes)
+
+            # Show image (input_img, norm_image, pred_image)
+            plt.figure(figsize=(15, 5))
+            plt.subplot(1, 3, 1)
+            plt.imshow(image)
+            plt.subplot(1, 3, 2)
+            plt.imshow(transform(image).permute(1,2,0))
+            plt.subplot(1, 3, 3)
+            plt.imshow(predictions)
+            plt.show()
