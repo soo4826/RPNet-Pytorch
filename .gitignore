@@ -11,3 +11,4 @@ save/
 __pycache__/*.pyc
 
 *.pyc
+train_woodscape_NFS_Test.ps1
