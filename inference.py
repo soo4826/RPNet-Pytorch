@@ -10,17 +10,18 @@ from models.rpnet import RPNet
 import os
 from argparse import ArgumentParser
 
-## Label map (Modified)
-# 0: Unlabeled (000)
-# 1: road (101)
-# 2: lanemarks (011)
-# 3: curb (010)
-# 4: person (100)
-# 5: rider (111)
-# 7: bicycle (011)
-# 6: vehicles (110)
-# 8: motorcycle (10.50.5)
-# 9: traffic_sign(0.50.50)
+## Label color for Valeo Woodscape Dataset
+# Color range: 0~1.0
+# 0: Unlabeled (0,0,0)
+# 1: road (1,0,1)
+# 2: lanemarks (0,1,1)
+# 3: curb (0,1,0)
+# 4: person (1,0,0)
+# 5: rider (1,1,1)
+# 7: bicycle (0,1,1)
+# 6: vehicles (1,1,0)
+# 8: motorcycle (1,0.5,0.5)
+# 9: traffic_sign(0.5,0.5,0)
 
 def decode_segmap(label_mask, num_classes):
     label_colors= np.array([
@@ -105,7 +106,7 @@ if __name__=="__main__":
 
     # Configure input image size
     height, width = args.height, args.width
-    
+
     # Enables GPU if possible
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
