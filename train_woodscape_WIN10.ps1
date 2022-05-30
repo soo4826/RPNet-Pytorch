@@ -8,4 +8,4 @@ python -W ignore main.py --step=3 --resume --dataset woodscape --dataset-dir dat
 python -W ignore main.py --step=2 --resume --dataset woodscape --dataset-dir data/Woodscape --batch-size 4 --learning-rate 5e-4 --epoch 5000 --height 968 --width 1280  --print-step --name RPNet_V1 --with-unlabeled
 
 #level1 training (original scale)
-python -W ignore main.py --step=1 --resume --dataset woodscape --dataset-dir data/Woodscape --batch-size 4 --learning-rate 5e-4 --epoch 5000 --height 968 --width 1280  --print-step --name RPNet_V1 --with-unlabeled
+python -W ignore main.py --step=1 --resume --dataset woodscape --dataset-dir data/Woodscape --batch-size 4 --learning-rate 5e-4 --epoch 5000 --height 968 --width 1280  --print-step --name RPNet_V1 --with-unlabeleda
