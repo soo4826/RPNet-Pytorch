@@ -119,7 +119,6 @@ def load_dataset(dataset):
 
     # Get class weights from the selected weighing technique
     print("\nWeighing technique:", args.weighing)
-    # class_weights = np.array([0.0,2.7,6.1,3.6,7.7,7.7,8.1,8.6,8.4,4.3,7.7,6.8,8.0,8.6,5.9,7.7,7.5,6.6,8.5,8.4])
     
     if args.weighing == "mfb":
         class_weights = np.array([0.00967325, 0.02527714, 0.41433799, 1.09568133, 1.53609429, 2.22449361, 0.18511685, 0.91968749, 1.86450677, 8.06233806])
@@ -127,7 +126,7 @@ def load_dataset(dataset):
         class_weights = np.array([ 1.89405685, 4.07064629, 28.86315168, 39.47962157, 43.46229526, 47.67547564, 18.71580954, 41.76057941, 47.5907759, 49.71292613])
     else: # without class weighting
         class_weights = None
-
+    
     if class_weights is not None:
         class_weights = torch.from_numpy(class_weights).float()
         # Set the weight of the unlabeled class to 0
