@@ -1,9 +1,20 @@
-# from data.utils import enet_weighing, median_freq_balancing
+## Script for calculating class weights
+# Supports 2 weighting method
+# - enet_weighting
+# - median_frequency weighting
+# Author: Jinsu ha , soo4826@gmail.com
+# Date: 2022.5.30
+
 import numpy as np
 from PIL import Image
 from torch import median
 from data import Woodscapes as dataset
 from tqdm import tqdm
+
+## Script for calculating class weights
+# Supports 2 weighting method
+# - enet_weighting
+# - median_frequency weighting
 
 
 def enet_weighing(dataloader, num_classes, c=1.02):

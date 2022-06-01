@@ -1,12 +1,5 @@
-cycler==0.10.0
-kiwisolver==1.0.1
-matplotlib==2.2.2
-numpy==1.14.2
-Pillow==5.0.0
-pyparsing==2.2.0
-python-dateutil==2.7.0
-pytz==2018.3
-PyYAML==4.2
-six==1.11.0
-torch==0.3.1
-torchvision==0.2.0
+matplotlib==3.3.4
+numpy==1.19.5
+opencv-python==4.5.5.64
+# install pytorch by following command
+# conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch -y

@@ -18,7 +18,7 @@ from args import get_arguments
 from data.utils import enet_weighing, median_freq_balancing
 import utils
 from PIL import Image
-# from tqdm import trange
+from tqdm import trange
 
 import numpy as np
 # Get the arguments
@@ -191,8 +191,8 @@ def train(train_loader, val_loader, class_weights, class_encoding):
     # Start Training
     train = Train(model, train_loader, optimizer, criterion, metric, use_cuda, step)
     val = Test(model, val_loader, criterion, metric, use_cuda, step)
-    for epoch in start_epoch, args.epochs:
-        # print(">>>> [Epoch: {0:d}] Training".format(epoch))
+    for epoch in trange(start_epoch, args.epochs):
+        print(">>>> [Epoch: {0:d}] Training".format(epoch))
         train.model.train()
         lr_updater.step()
         epoch_loss, (iou, miou) = train.run_epoch(args.print_step)
@@ -219,7 +219,7 @@ def train(train_loader, val_loader, class_weights, class_encoding):
                 print("\nBest model thus far. Saving...\n")
                 best_miou = miou
                 utils.save_checkpoint(model, optimizer, epoch + 1, best_miou,args)
-   
+
 
     return model
 
@@ -341,3 +341,9 @@ if __name__ == '__main__':
         raise RuntimeError(
             "\"{0}\" is not a valid choice for execution mode.".format(
                 args.mode))
+    
+    # Print end of training(progress)
+    print("Training RPNet level " + str(args.step) + " is complete")
+    if args.step == 1:
+        print("Training RPNet level 1~4 is complete")
+
