@@ -81,10 +81,10 @@ def get_arguments():
         default=1024,
         help="The image height. Default: 2048")
     parser.add_argument(
-        "--weighing",
+        "--weighting",
         choices=['enet', 'mfb', 'None'],
         default='None',
-        help="The class weighing technique to apply to the dataset. "
+        help="The class weighting technique to apply to the dataset. "
         "Default: None")
     parser.add_argument(
         "--with-unlabeled",

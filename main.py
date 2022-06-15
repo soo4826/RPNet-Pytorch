@@ -1,7 +1,6 @@
 import os
 
 import torch
-torch.cuda.set_device(0)
 import torch.nn as nn
 import torch.optim as optim
 import torch.optim.lr_scheduler as lr_scheduler
@@ -15,7 +14,7 @@ from train import Train
 from test import Test
 from metric.iou import IoU
 from args import get_arguments
-from data.utils import enet_weighing, median_freq_balancing
+from data.utils import enet_weighting, median_freq_balancing
 import utils
 from PIL import Image
 from tqdm import trange
@@ -117,12 +116,12 @@ def load_dataset(dataset):
         color_labels = utils.batch_transform(labels, label_to_rgb)
         utils.imshow_batch(images, color_labels)
 
-    # Get class weights from the selected weighing technique
-    print("\nWeighing technique:", args.weighing)
+    # Get class weights from the selected weighting technique
+    print("\nweighting technique:", args.weighting)
     
-    if args.weighing == "mfb":
+    if args.weighting == "mfb":
         class_weights = np.array([0.00967325, 0.02527714, 0.41433799, 1.09568133, 1.53609429, 2.22449361, 0.18511685, 0.91968749, 1.86450677, 8.06233806])
-    elif args.weighing == "enet":
+    elif args.weighting == "enet":
         class_weights = np.array([ 1.89405685, 4.07064629, 28.86315168, 39.47962157, 43.46229526, 47.67547564, 18.71580954, 41.76057941, 47.5907759, 49.71292613])
     else: # without class weighting
         class_weights = None
@@ -333,7 +332,6 @@ if __name__ == '__main__':
         # Load the previoulsy saved model state to the RPNet model
         model = utils.load_checkpoint(model, optimizer, args.save_dir,
                                       args.name)[0]
-        #print(model)
         step = args.step     
         test(model, test_loader, w_class, class_encoding, step)
     else:

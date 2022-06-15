@@ -1,0 +1,3 @@
+# Log for Woodscpae 2nd training (Fix epoch issue)
+|      SAVE Name      |      Weighting      |      LR      |      DEVICE      |       DATE      |
+    

@@ -17,7 +17,7 @@ from tqdm import tqdm
 # - median_frequency weighting
 
 
-def enet_weighing(dataloader, num_classes, c=1.02):
+def enet_weighting(dataloader, num_classes, c=1.02):
     """Computes class weights as described in the ENet paper:
 
         w_class = 1 / (ln(c + p_class)),
@@ -111,7 +111,7 @@ if __name__ == "__main__":
     root_dir = "data/Woodscape"
     dataset_train = dataset(root_dir, 'train')
     median_freq_weight = median_freq_balancing(dataset_train, 10)
-    enet_weight = enet_weighing(dataset_train, 10)
+    enet_weight = enet_weighting(dataset_train, 10)
 
     print("Median freq weight: ", median_freq_weight)
     print("Enet weight: ", enet_weight)
