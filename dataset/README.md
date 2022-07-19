@@ -2,6 +2,7 @@
 
 - CamVid
 - CityScapes
+- Woodscapes
 
 Note: When referring to the number of classes, the void/unlabeled class is excluded.
 
@@ -22,3 +23,7 @@ The version supported here is the finely annotated one with 19 classes.
 For more detailed information see the official [website](https://www.cityscapes-dataset.com/) and [repository](https://github.com/mcordts/cityscapesScripts).
 
 The dataset can be downloaded from https://www.cityscapes-dataset.com/downloads/. At this time, a registration is required to download the data.
+
+## Woodscapes
+Woodscape is a set of multi-task, multi-camera fisheye dataset for autonomous driving
+The dataset can be downloaded from https://woodscape.valeo.com/

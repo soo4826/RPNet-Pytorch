@@ -67,9 +67,9 @@ def get_arguments():
     parser.add_argument(
         "--dataset-dir",
         type=str,
-        default="data/Cityscapes",
+        default="dataset/Cityscapes",
         help="Path to the root directory of the selected dataset. "
-        "Default: data/Cityscapes")
+        "Default: dataset/Cityscapes")
     parser.add_argument(
         "--height",
         type=int,

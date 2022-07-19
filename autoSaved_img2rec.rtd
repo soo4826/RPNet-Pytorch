@@ -114,14 +114,14 @@
     <Property LongName="PythonBridge_1.guard_begin" Type="0" SubType="128">true</Property>
     <Property LongName="PythonBridge_1.internalInputs" Type="3" SubType="128"><![CDATA[]]></Property>
     <Property LongName="PythonBridge_1.internalOutputs" Type="3" SubType="128"><![CDATA[out;18==;0]]></Property>
-    <Property LongName="PythonBridge_1.internalProperties" Type="3" SubType="128"><![CDATA[dataset_path||13||data\Woodscape\||15#image_split||13||FV.txt||13]]></Property>
+    <Property LongName="PythonBridge_1.internalProperties" Type="3" SubType="128"><![CDATA[dataset_path||13||X:\DAR_AUTO\trunk\src\perception\WoodscapeSemanticSegmentation\Training_RPNet\dataset\Woodscape\||15#image_split||13||FV.txt||13]]></Property>
     <ReadOnlyProperty LongName="PythonBridge_1.advance_begin_configuration" Type="3" SubType="256"><![CDATA[Advanced Configuration]]></ReadOnlyProperty>
     <Property LongName="PythonBridge_1.deathBehavior" Type="4"><![CDATA[3|1|WAIT FOR PROCESS INDEFINITELY|KILL PROCESS AFTER TIMEOUT (5sec)|START ANOTHER PROCESS]]></Property>
     <Property LongName="PythonBridge_1.logDebug" Type="0">false</Property>
     <Property LongName="PythonBridge_1.showTracebackInConsole" Type="0">true</Property>
     <Property LongName="PythonBridge_1.autoReloadSubModules" Type="0">true</Property>
     <Property LongName="PythonBridge_1.memorySize" Type="1">10000000</Property>
-    <ReadOnlyProperty LongName="PythonBridge_1.pythonPID" Type="1">30316</ReadOnlyProperty>
+    <ReadOnlyProperty LongName="PythonBridge_1.pythonPID" Type="1">36044</ReadOnlyProperty>
     <Property LongName="PythonBridge_1.additionalEnvironmentVariables" Type="3"><![CDATA[]]></Property>
     <ReadOnlyProperty LongName="PythonBridge_1.advance_end_configuration" Type="0" SubType="512">false</ReadOnlyProperty>
     <ReadOnlyProperty LongName="PythonBridge_1.basic_begin_configuration" Type="3" SubType="256"><![CDATA[Basic Configuration]]></ReadOnlyProperty>
@@ -130,10 +130,10 @@
     <Property LongName="PythonBridge_1.className" Type="3"><![CDATA[rtmaps_python]]></Property>
     <Property LongName="PythonBridge_1.pythonFilename" Type="3" SubType="80"><![CDATA[X:/DAR_AUTO/trunk/src/perception/WoodscapeSemanticSegmentation/Training_RPNet/img2rec.py]]><Relative><![CDATA[%RTMAPS_DIAGRAMDIR%/img2rec.py]]></Relative></Property>
     <Property LongName="PythonBridge_1.readingPolicy" Type="4"><![CDATA[5|2|Synchro|Reactive|Sampling|Triggered by First Input|Periodic Resampling While Post-Processing]]></Property>
-    <Property LongName="PythonBridge_1.samplingPeriod" Type="1" SubType="1">100000</Property>
+    <Property LongName="PythonBridge_1.samplingPeriod" Type="1" SubType="1">300000</Property>
     <ReadOnlyProperty LongName="PythonBridge_1.prop_end_subsection_default_opened" Type="0" SubType="512">true</ReadOnlyProperty>
     <ReadOnlyProperty LongName="PythonBridge_1.userSubsection" Type="3" SubType="256"><![CDATA[User Properties]]></ReadOnlyProperty>
-    <Property LongName="PythonBridge_1.dataset_path" Type="3" SubType="96"><![CDATA[dataset/Woodscape/]]></Property>
+    <Property LongName="PythonBridge_1.dataset_path" Type="3" SubType="96"><![CDATA[X:/DAR_AUTO/trunk/src/perception/WoodscapeSemanticSegmentation/Training_RPNet/dataset/Woodscape/]]><Relative><![CDATA[%RTMAPS_DIAGRAMDIR%/dataset/Woodscape]]></Relative></Property>
     <Property LongName="PythonBridge_1.image_split" Type="3"><![CDATA[FV.txt]]></Property>
     <ReadOnlyProperty LongName="PythonBridge_1.userSubsectionEnd" Type="0" SubType="512">true</ReadOnlyProperty>
     <Property LongName="PythonBridge_1.threaded" Type="0">true</Property>
@@ -153,14 +153,14 @@
     <Property LongName="PythonBridge_2.guard_begin" Type="0" SubType="128">true</Property>
     <Property LongName="PythonBridge_2.internalInputs" Type="3" SubType="128"><![CDATA[image;18==]]></Property>
     <Property LongName="PythonBridge_2.internalOutputs" Type="3" SubType="128"><![CDATA[out;18==;0]]></Property>
-    <Property LongName="PythonBridge_2.internalProperties" Type="3" SubType="128"><![CDATA[config_file||13||X:\DAR_AUTO\trunk\src\perception\WoodscapeSemanticSegmentation\Inference\configs\semantic_segmentation.ini||14#alpha||11||0.6]]></Property>
+    <Property LongName="PythonBridge_2.internalProperties" Type="3" SubType="128"><![CDATA[config_file||13||X:\DAR_AUTO\trunk\src\perception\WoodscapeSemanticSegmentation\Inference\configs\bisenet.ini||14#alpha||11||0.6]]></Property>
     <ReadOnlyProperty LongName="PythonBridge_2.advance_begin_configuration" Type="3" SubType="256"><![CDATA[Advanced Configuration]]></ReadOnlyProperty>
     <Property LongName="PythonBridge_2.deathBehavior" Type="4"><![CDATA[3|1|WAIT FOR PROCESS INDEFINITELY|KILL PROCESS AFTER TIMEOUT (5sec)|START ANOTHER PROCESS]]></Property>
     <Property LongName="PythonBridge_2.logDebug" Type="0">false</Property>
     <Property LongName="PythonBridge_2.showTracebackInConsole" Type="0">true</Property>
     <Property LongName="PythonBridge_2.autoReloadSubModules" Type="0">true</Property>
     <Property LongName="PythonBridge_2.memorySize" Type="1">10000000</Property>
-    <ReadOnlyProperty LongName="PythonBridge_2.pythonPID" Type="1">25960</ReadOnlyProperty>
+    <ReadOnlyProperty LongName="PythonBridge_2.pythonPID" Type="1">22908</ReadOnlyProperty>
     <Property LongName="PythonBridge_2.additionalEnvironmentVariables" Type="3"><![CDATA[]]></Property>
     <ReadOnlyProperty LongName="PythonBridge_2.advance_end_configuration" Type="0" SubType="512">false</ReadOnlyProperty>
     <ReadOnlyProperty LongName="PythonBridge_2.basic_begin_configuration" Type="3" SubType="256"><![CDATA[Basic Configuration]]></ReadOnlyProperty>
@@ -172,7 +172,7 @@
     <Property LongName="PythonBridge_2.synchroTolerance" Type="1" SubType="1">0</Property>
     <ReadOnlyProperty LongName="PythonBridge_2.prop_end_subsection_default_opened" Type="0" SubType="512">true</ReadOnlyProperty>
     <ReadOnlyProperty LongName="PythonBridge_2.userSubsection" Type="3" SubType="256"><![CDATA[User Properties]]></ReadOnlyProperty>
-    <Property LongName="PythonBridge_2.config_file" Type="3" SubType="80"><![CDATA[X:\DAR_AUTO\trunk\src\perception\WoodscapeSemanticSegmentation\Inference\configs\semantic_segmentation.ini]]><Relative><![CDATA[%RTMAPS_DIAGRAMDIR%/../Inference/configs/semantic_segmentation.ini]]></Relative></Property>
+    <Property LongName="PythonBridge_2.config_file" Type="3" SubType="80"><![CDATA[X:\DAR_AUTO\trunk\src\perception\WoodscapeSemanticSegmentation\Inference\configs\bisenet.ini]]><Relative><![CDATA[%RTMAPS_DIAGRAMDIR%/../Inference/configs/bisenet.ini]]></Relative></Property>
     <Property LongName="PythonBridge_2.alpha" Type="2">0.6</Property>
     <ReadOnlyProperty LongName="PythonBridge_2.userSubsectionEnd" Type="0" SubType="512">true</ReadOnlyProperty>
     <Property LongName="PythonBridge_2.threaded" Type="0">true</Property>

@@ -108,7 +108,7 @@ def median_freq_balancing(dataloader, num_classes):
 
 
 if __name__ == "__main__":
-    root_dir = "data/Woodscape"
+    root_dir = "dataset/Woodscape"
     dataset_train = dataset(root_dir, 'train')
     median_freq_weight = median_freq_balancing(dataset_train, 10)
     enet_weight = enet_weighting(dataset_train, 10)

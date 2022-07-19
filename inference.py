@@ -92,8 +92,8 @@ if __name__=="__main__":
     parser.add_argument(
     "--dataset-path",
     type=str,
-    default="data/Woodscape",
-    help="Dataset path to use (Default: data/Woodscape")
+    default="dataset/Woodscape",
+    help="Dataset path to use (Default: dataset/Woodscape")
     parser.add_argument(
     "--image-name",
     type=str,

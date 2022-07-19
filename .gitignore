@@ -12,10 +12,10 @@ __pycache__/*.pyc
 
 *.pyc
 train_woodscape_NFS_Test.ps1
-data/Woodscape/20220530_183740_RecFile_1/RecFile_1_20220530_183740.idy
-data/Woodscape/20220530_183740_RecFile_1/RecFile_1_20220530_183740.idx
-data/Woodscape/20220530_183740_RecFile_1/RecFile_1_20220530_183740.rec
-data/Woodscape/20220530_183740_RecFile_1/RecFile_1_20220530_183740_PythonBridge_1_out.idx
-data/Woodscape/20220530_183740_RecFile_1/RecFile_1_20220530_183740_PythonBridge_1_out.inf
-data/Woodscape/FV.txt
+dataset/Woodscape/20220530_183740_RecFile_1/RecFile_1_20220530_183740.idy
+dataset/Woodscape/20220530_183740_RecFile_1/RecFile_1_20220530_183740.idx
+dataset/Woodscape/20220530_183740_RecFile_1/RecFile_1_20220530_183740.rec
+dataset/Woodscape/20220530_183740_RecFile_1/RecFile_1_20220530_183740_PythonBridge_1_out.idx
+dataset/Woodscape/20220530_183740_RecFile_1/RecFile_1_20220530_183740_PythonBridge_1_out.inf
+dataset/Woodscape/FV.txt
 *.jsq
